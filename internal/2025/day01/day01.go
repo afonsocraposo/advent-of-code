@@ -5,7 +5,7 @@ import (
 	"log"
 	"strconv"
 
-	"github.com/afonsocraposo/advent-of-code/internal/utils/filereader"
+	"github.com/afonsocraposo/advent-of-code/internal/utils/runner"
 )
 
 const day = 01
@@ -13,42 +13,12 @@ const day = 01
 var examples = []int{1}
 
 func Main() {
-	log.Printf("DAY %d\n", day)
+	r := runner.New(2025, 1, part1, part2)
+	r.TestPart1(1, 1)
+	r.RunPart1(1)
 
-	for part := 1; part <= 2; part++ {
-		var partMethod func([]string) string
-		if part == 1 {
-			partMethod = part1
-		} else {
-			partMethod = part2
-		}
-
-		log.Printf("Part %d:\n", part)
-		for _, example := range examples {
-			exampleLines, err := filereader.ReadDayExample(2025, day, example)
-			if err != nil {
-				log.Fatalln(err)
-			}
-			expectedSolution, err := filereader.ReadDayExampleSolution(2025, day, example, part)
-			if err != nil {
-				continue
-			}
-
-			exampleSolution := partMethod(exampleLines)
-			if exampleSolution != expectedSolution {
-				log.Fatalf("WRONG solution for example %d. Expected: %s, Actual: %s\n", example, expectedSolution, exampleSolution)
-			} else {
-				log.Printf("The solution is CORRECT for example %d. Expected/actual: %s\n", example, exampleSolution)
-			}
-
-		}
-		inputLines, err := filereader.ReadDayInput(2025, day, 1)
-		if err != nil {
-			log.Fatalln(err)
-		}
-		inputSolution := partMethod(inputLines)
-		log.Printf("The solution for the input is: %s\n", inputSolution)
-	}
+	r.TestPart2(1, 2)
+	r.RunPart2(1)
 }
 
 func part1(lines []string) string {

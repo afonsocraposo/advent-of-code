@@ -47,6 +47,7 @@ func ReadDayInput(year int, day int, input int) ([]string, error) {
 	if err != nil {
 		return []string{""}, err
 	}
+	log.Println("ℹ️ Read file", filepath)
 	return lines, nil
 }
 
@@ -70,6 +71,7 @@ func ReadDayExample(year int, day int, input int) ([]string, error) {
 	if err != nil {
 		return []string{""}, err
 	}
+	log.Println("ℹ️ Read file", filepath)
 	return lines, nil
 }
 
@@ -84,6 +86,8 @@ func ReadDayExampleSolution(year int, day int, input int, part int) (string, err
 	if err != nil {
 		return "", err
 	}
+		log.Println("ℹ️ Read file", filepath)
+
 	return lines[0], nil
 }
 
