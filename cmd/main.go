@@ -7,10 +7,12 @@ import (
 	"time"
 
 	year2024 "github.com/afonsocraposo/advent-of-code/internal/2024"
+	year2025 "github.com/afonsocraposo/advent-of-code/internal/2025"
 )
 
 var yearDays = map[int]map[int]func(){
 	2024: year2024.Days,
+	2025: year2025.Days,
 }
 
 func main() {
