@@ -1,4 +1,4 @@
-package day010
+package day01
 
 import (
 	"fmt"
@@ -8,12 +8,13 @@ import (
 	"github.com/afonsocraposo/advent-of-code/internal/utils/runner"
 )
 
-const day = 01
+const year = 2025
+const day = 1
 
 var examples = []int{1}
 
 func Main() {
-	r := runner.New(2025, 1, part1, part2)
+	r := runner.New(year, day, part1, part2)
 	r.TestPart1(1, 1)
 	r.RunPart1(1)
 
