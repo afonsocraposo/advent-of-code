@@ -3,11 +3,12 @@ package day010
 import (
 	"fmt"
 	"log"
+	"strconv"
 
 	"github.com/afonsocraposo/advent-of-code/internal/utils/filereader"
 )
 
-const day = 00
+const day = 01
 
 var examples = []int{1}
 
@@ -24,11 +25,11 @@ func Main() {
 
 		log.Printf("Part %d:\n", part)
 		for _, example := range examples {
-			exampleLines, err := filereader.ReadDayExample(day, example)
+			exampleLines, err := filereader.ReadDayExample(2025, day, example)
 			if err != nil {
 				log.Fatalln(err)
 			}
-			expectedSolution, err := filereader.ReadDayExampleSolution(day, example, part)
+			expectedSolution, err := filereader.ReadDayExampleSolution(2025, day, example, part)
 			if err != nil {
 				continue
 			}
@@ -41,7 +42,7 @@ func Main() {
 			}
 
 		}
-		inputLines, err := filereader.ReadDayInput(day, 1)
+		inputLines, err := filereader.ReadDayInput(2025, day, 1)
 		if err != nil {
 			log.Fatalln(err)
 		}
@@ -52,10 +53,48 @@ func Main() {
 
 func part1(lines []string) string {
 	solution := 0
+	dial := 50
+	for _, line := range lines {
+		rotations, err := strconv.Atoi(line[1:])
+		if err != nil {
+			log.Fatalln(err)
+		}
+		if line[0] == 'R' {
+			dial += rotations % 100
+		} else {
+			dial += ((-rotations % 100) + 100)
+		}
+		dial %= 100
+		if dial == 0 {
+			solution++
+		}
+	}
 	return fmt.Sprintf("%d", solution)
 }
 
 func part2(lines []string) string {
 	solution := 0
+	dial := 50
+	for _, line := range lines {
+		rotations, err := strconv.Atoi(line[1:])
+		if err != nil {
+			log.Fatalln(err)
+		}
+		if line[0] == 'R' {
+			dial += rotations
+			solution += dial / 100
+		} else {
+			dial -= rotations
+			if dial < 0 && dial+rotations > 0 {
+				// the dial went from positive to negative
+				solution++
+			}
+			solution += dial / -100
+		}
+		if dial == 0 {
+			solution++
+		}
+		dial = ((dial % 100) + 100) % 100
+	}
 	return fmt.Sprintf("%d", solution)
 }
