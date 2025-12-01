@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/point"
+	"github.com/afonsocraposo/advent-of-code/internal/utils/point"
 )
 
 type Matrix struct {

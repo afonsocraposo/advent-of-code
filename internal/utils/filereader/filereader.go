@@ -27,21 +27,21 @@ func New(path string) FileReader {
 	}
 }
 
-func NewFromDayInput(day int, input int) FileReader {
+func NewFromDayInput(year int, day int, input int) FileReader {
 	wd, err := os.Getwd()
 	if err != nil {
 		log.Fatalln(err)
 	}
-	filepath := filepath.Join(wd, "puzzles", fmt.Sprintf("day%d", day), fmt.Sprintf("input%d.txt", input))
+	filepath := filepath.Join(wd, "puzzles", fmt.Sprintf("%d", year), fmt.Sprintf("day%02d", day), fmt.Sprintf("input%d.txt", input))
 	return New(filepath)
 }
 
-func ReadDayInput(day int, input int) ([]string, error) {
+func ReadDayInput(year int, day int, input int) ([]string, error) {
 	wd, err := os.Getwd()
 	if err != nil {
 		log.Fatalln(err)
 	}
-	filepath := filepath.Join(wd, "puzzles", fmt.Sprintf("day%d", day), fmt.Sprintf("input%d.txt", input))
+	filepath := filepath.Join(wd, "puzzles", fmt.Sprintf("%d", year), fmt.Sprintf("day%02d", day), fmt.Sprintf("input%d.txt", input))
 	f := New(filepath)
 	lines, err := f.ReadLines()
 	if err != nil {
@@ -50,21 +50,21 @@ func ReadDayInput(day int, input int) ([]string, error) {
 	return lines, nil
 }
 
-func NewFromDayExample(day int, input int) FileReader {
+func NewFromDayExample(year int, day int, input int) FileReader {
 	wd, err := os.Getwd()
 	if err != nil {
 		log.Fatalln(err)
 	}
-	filepath := filepath.Join(wd, "puzzles", fmt.Sprintf("day%d", day), fmt.Sprintf("example%d.txt", input))
+	filepath := filepath.Join(wd, "puzzles", fmt.Sprintf("%d", year), fmt.Sprintf("day%02d", day), fmt.Sprintf("example%d.txt", input))
 	return New(filepath)
 }
 
-func ReadDayExample(day int, input int) ([]string, error) {
+func ReadDayExample(year int, day int, input int) ([]string, error) {
 	wd, err := os.Getwd()
 	if err != nil {
 		log.Fatalln(err)
 	}
-	filepath := filepath.Join(wd, "puzzles", fmt.Sprintf("day%d", day), fmt.Sprintf("example%d.txt", input))
+	filepath := filepath.Join(wd, "puzzles", fmt.Sprintf("%d", year), fmt.Sprintf("day%02d", day), fmt.Sprintf("example%d.txt", input))
 	f := New(filepath)
 	lines, err := f.ReadLines()
 	if err != nil {
@@ -73,12 +73,12 @@ func ReadDayExample(day int, input int) ([]string, error) {
 	return lines, nil
 }
 
-func ReadDayExampleSolution(day int, input int, part int) (string, error) {
+func ReadDayExampleSolution(year int, day int, input int, part int) (string, error) {
 	wd, err := os.Getwd()
 	if err != nil {
 		log.Fatalln(err)
 	}
-	filepath := filepath.Join(wd, "puzzles", fmt.Sprintf("day%d", day), fmt.Sprintf("example%d.solution%d.txt", input, part))
+	filepath := filepath.Join(wd, "puzzles", fmt.Sprintf("%d", year), fmt.Sprintf("day%02d", day), fmt.Sprintf("example%d.solution%d.txt", input, part))
 	f := New(filepath)
 	lines, err := f.ReadLines()
 	if err != nil {

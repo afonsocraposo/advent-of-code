@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"slices"
 
-	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/matrix"
-	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/point"
-	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/queue"
+	"github.com/afonsocraposo/advent-of-code/internal/utils/matrix"
+	"github.com/afonsocraposo/advent-of-code/internal/utils/point"
+	"github.com/afonsocraposo/advent-of-code/internal/utils/queue"
 )
 
 type rpath struct {

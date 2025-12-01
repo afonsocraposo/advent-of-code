@@ -1,6 +1,6 @@
 package queue
 
-import "github.com/afonsocraposo/advent-of-code-2024/internal/utils/point"
+import "github.com/afonsocraposo/advent-of-code/internal/utils/point"
 
 type PriorityQueue struct {
 	Queue []PriorityQueueElement

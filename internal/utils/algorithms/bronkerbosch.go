@@ -1,8 +1,8 @@
 package algorithms
 
 import (
-	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/mapp"
-	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/set"
+	"github.com/afonsocraposo/advent-of-code/internal/utils/mapp"
+	"github.com/afonsocraposo/advent-of-code/internal/utils/set"
 )
 
 // Finds all maximal cliques in a graph using the Bron-Kerbosch algorithm without pivoting.

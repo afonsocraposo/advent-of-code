@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/afonsocraposo/advent-of-code-2024/internal/utils"
-	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/matrix"
+	"github.com/afonsocraposo/advent-of-code/internal/utils"
+	"github.com/afonsocraposo/advent-of-code/internal/utils/matrix"
 )
 
 func printLine(n int) {

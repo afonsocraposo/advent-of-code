@@ -1,8 +1,8 @@
 package algorithms
 
 import (
-	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/matrix"
-	"github.com/afonsocraposo/advent-of-code-2024/internal/utils/point"
+	"github.com/afonsocraposo/advent-of-code/internal/utils/matrix"
+	"github.com/afonsocraposo/advent-of-code/internal/utils/point"
 )
 
 func FloodFill(mat matrix.Matrix, start point.Point) []point.Point {

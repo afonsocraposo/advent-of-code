@@ -1,49 +1,54 @@
 #!/bin/sh
 
-# Determine the day number
 if [ -z "$1" ]; then
-  DAY=$(date +"%d") # Use today's day if no argument is provided
+  YEAR=$(date +"%Y")
 else
-  DAY=$(printf "%02d" "$1") # Ensure day is zero-padded
+  YEAR="$1"
 fi
-year=$(date +"%Y")
 
-# Create necessary directories
-mkdir -p "internal/day$DAY" "puzzles/day$DAY"
+if [ -z "$2" ]; then
+  DAY=$(date +"%d")
+else
+  DAY=$(printf "%02d" "$2")
+fi
 
-# check if the day already exists
-ALREADY_EXISTS=$(ls internal/day$DAY 2>/dev/null)
+mkdir -p "internal/${YEAR}/day${DAY}" "puzzles/${YEAR}/day${DAY}"
 
-# Create files with safety checks
-touch "internal/day$DAY/day${DAY}.go" "puzzles/day$DAY/example1.txt" "puzzles/day$DAY/example1.solution1.txt" "puzzles/day$DAY/input1.txt"
+ALREADY_EXISTS=$(ls internal/${YEAR}/day${DAY} 2>/dev/null)
 
-# Populate the Go file with a template if it doesn't exist
+touch "internal/${YEAR}/day${DAY}/day${DAY}.go" "puzzles/${YEAR}/day${DAY}/example1.txt" "puzzles/${YEAR}/day${DAY}/example1.solution1.txt" "puzzles/${YEAR}/day${DAY}/input1.txt"
+
 if [ -z "$ALREADY_EXISTS" ]; then
-NEW_DAY="internal/day$DAY/day${DAY}.go"
-cp internal/day00/day00.go $NEW_DAY
-sed -i "" "s/00/${DAY}/g" $NEW_DAY
+NEW_DAY="internal/${YEAR}/day${DAY}/day${DAY}.go"
+cp internal/2024/day00/day00.go $NEW_DAY
+sed -i "" "s/package day00/package day${DAY}/g" $NEW_DAY
+sed -i "" "s/DAY 0/DAY ${DAY#0}/g" $NEW_DAY
+sed -i "" "s/filereader\.NewFromDayInput(2024, 0,/filereader.NewFromDayInput(${YEAR}, ${DAY#0},/g" $NEW_DAY
+sed -i "" "s/filereader\.NewFromDayExample(2024, 0,/filereader.NewFromDayExample(${YEAR}, ${DAY#0},/g" $NEW_DAY
+sed -i "" "s/filereader\.ReadDayInput(2024, 0,/filereader.ReadDayInput(${YEAR}, ${DAY#0},/g" $NEW_DAY
+sed -i "" "s/filereader\.ReadDayExample(2024, 0,/filereader.ReadDayExample(${YEAR}, ${DAY#0},/g" $NEW_DAY
+sed -i "" "s/filereader\.ReadDayExampleSolution(2024, 0,/filereader.ReadDayExampleSolution(${YEAR}, ${DAY#0},/g" $NEW_DAY
 
-# Format the Go file
-gofmt -w "internal/day$DAY/day${DAY}.go"
+gofmt -w "internal/${YEAR}/day${DAY}/day${DAY}.go"
 fi
 
-
-# Update cmd/main.go
 MAIN_FILE="cmd/main.go"
-IMPORT_STATEMENT="\\\"github.com/afonsocraposo/advent-of-code-${year}/internal/day${DAY}\\\""
-DAYS_ENTRY="${DAY}: day${DAY}.Main,"
+IMPORT_STATEMENT="day${DAY} \\\"github.com/afonsocraposo/advent-of-code/internal/${YEAR}/day${DAY}\\\""
+DAYS_ENTRY="${DAY#0}: day${DAY}.Main,"
 
-# Add import statement if not already present
-if ! grep -q "$IMPORT_STATEMENT" "$MAIN_FILE"; then
-  printf "%s\n" "$IMPORT_STATEMENT" | sed -i '' "/import (/a\\"$'\n'"$IMPORT_STATEMENT;" "$MAIN_FILE"
+if ! grep -q "day${DAY} \"github.com/afonsocraposo/advent-of-code/internal/${YEAR}/day${DAY}\"" "$MAIN_FILE"; then
+  sed -i '' "/import (/a\\
+	$IMPORT_STATEMENT
+" "$MAIN_FILE"
 fi
 
-# Add day entry to the map if not already present
-if ! grep -q "$DAYS_ENTRY" "$MAIN_FILE"; then
-  printf "%s\n" "$DAYS_ENTRY" | sed -i '' "/var days = map\\[int\\]func()/a\\"$'\n'"$DAYS_ENTRY"$'\n'" " "$MAIN_FILE"
+if ! grep -q "${DAY#0}: day${DAY}.Main," "$MAIN_FILE"; then
+  sed -i '' "/var days${YEAR} = map\\[int\\]func()/,/^}/ {
+    /^}/ i\\
+	${DAYS_ENTRY}
+  }" "$MAIN_FILE"
 fi
 
 gofmt -w "$MAIN_FILE"
 
-# Notify the user
-echo "Setup completed for Day $DAY"
+echo "Setup completed for Year $YEAR, Day $DAY"
