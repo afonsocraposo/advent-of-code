@@ -2,7 +2,7 @@ package year2025
 
 import (
 	day01 "github.com/afonsocraposo/advent-of-code/internal/2025/day01"
-	// day02 "github.com/afonsocraposo/advent-of-code/internal/2025/day02"
+	day02 "github.com/afonsocraposo/advent-of-code/internal/2025/day02"
 	// day03 "github.com/afonsocraposo/advent-of-code/internal/2025/day03"
 	// day04 "github.com/afonsocraposo/advent-of-code/internal/2025/day04"
 	// day05 "github.com/afonsocraposo/advent-of-code/internal/2025/day05"
@@ -30,7 +30,7 @@ import (
 
 var Days = map[int]func(){
 	1:  day01.Main,
-	// 2:  day02.Main,
+	2:  day02.Main,
 	// 3:  day03.Main,
 	// 4:  day04.Main,
 	// 5:  day05.Main,

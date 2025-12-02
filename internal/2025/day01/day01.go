@@ -11,8 +11,6 @@ import (
 const year = 2025
 const day = 1
 
-var examples = []int{1}
-
 func Main() {
 	r := runner.New(year, day, part1, part2)
 	r.TestPart1(1, 1)
