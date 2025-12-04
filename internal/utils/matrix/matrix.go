@@ -3,7 +3,9 @@ package matrix
 import (
 	"errors"
 	"fmt"
+	"log"
 
+	"github.com/afonsocraposo/advent-of-code/internal/utils/numbers"
 	"github.com/afonsocraposo/advent-of-code/internal/utils/point"
 )
 
@@ -165,7 +167,7 @@ func (matrix *Matrix) Get(i int, j int) (int, error) {
 }
 
 func (matrix *Matrix) GetPoint(p point.Point) (int, error) {
-    return matrix.Get(p.I, p.J)
+	return matrix.Get(p.I, p.J)
 }
 
 func (matrix1 *Matrix) PatternMatch(matrix2 Matrix, mask Matrix) Matrix {
@@ -190,6 +192,36 @@ func (matrix1 *Matrix) PatternMatch(matrix2 Matrix, mask Matrix) Matrix {
 		}
 	}
 	return NewMatrix(result)
+}
+
+func (matrix *Matrix) Convolution(kernel Matrix) (Matrix, error) {
+	m, n := matrix.Size()
+	km, kn := kernel.Size()
+	if km%2 != 1 || kn%2 != 1 {
+		return *matrix, errors.New("Kernel does not have a center")
+	}
+
+	padded := NewEmptyMatrix(m+km, n+kn)
+	for i := range m {
+		for j := range n {
+			value, err := matrix.Get(i, j)
+			if err != nil {
+				log.Fatalln(err)
+			}
+			padded.Set(i+km/2, j+kn/2, value)
+		}
+	}
+
+	result := NewEmptyMatrix(m, n)
+	for i := range m {
+		for j := range n {
+			sub := padded.SubMatrix(i, j, i+km, j+kn)
+			dot := sub.Dot(kernel)
+			v := dot.Reduce(numbers.Sum, 0)
+			result.Set(i, j, v)
+		}
+	}
+	return result, nil
 }
 
 func (matrix *Matrix) SubMatrix(iStart int, jStart int, iEnd int, jEnd int) Matrix {
@@ -245,8 +277,8 @@ func (matrix *Matrix) Set(i int, j int, value int) {
 	matrix.Rows[i].Set(j, value)
 }
 
-func (matrix *Matrix) SetPoint(p point.Point, value int ) {
-    matrix.Set(p.I, p.J, value)
+func (matrix *Matrix) SetPoint(p point.Point, value int) {
+	matrix.Set(p.I, p.J, value)
 }
 
 func (matrix *Matrix) PrintText() {
