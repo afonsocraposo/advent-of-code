@@ -16,6 +16,13 @@ func IntPow(n, m int) int {
 	return result
 }
 
+func IntMax(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
 func IntMin(a, b int) int {
 	if a < b {
 		return a

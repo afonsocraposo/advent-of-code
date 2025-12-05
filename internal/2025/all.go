@@ -5,7 +5,7 @@ import (
 	day02 "github.com/afonsocraposo/advent-of-code/internal/2025/day02"
 	day03 "github.com/afonsocraposo/advent-of-code/internal/2025/day03"
 	day04 "github.com/afonsocraposo/advent-of-code/internal/2025/day04"
-	// day05 "github.com/afonsocraposo/advent-of-code/internal/2025/day05"
+	day05 "github.com/afonsocraposo/advent-of-code/internal/2025/day05"
 	// day06 "github.com/afonsocraposo/advent-of-code/internal/2025/day06"
 	// day07 "github.com/afonsocraposo/advent-of-code/internal/2025/day07"
 	// day08 "github.com/afonsocraposo/advent-of-code/internal/2025/day08"
@@ -33,7 +33,7 @@ var Days = map[int]func(){
 	2: day02.Main,
 	3: day03.Main,
 	4: day04.Main,
-	// 5:  day05.Main,
+	5: day05.Main,
 	// 6:  day06.Main,
 	// 7:  day07.Main,
 	// 8:  day08.Main,
