@@ -72,7 +72,7 @@ func (matrix *Matrix) Transpose() (*Matrix, error) {
 	}
 
 	t := make([]Vector, n)
-	for i := 0; i < m; i++ {
+	for i := range n {
 		col, err := matrix.Column(i)
 		if err != nil {
 			return nil, err

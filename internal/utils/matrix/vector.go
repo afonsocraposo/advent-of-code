@@ -20,10 +20,10 @@ func NewEmptyVector(n int) Vector {
 }
 
 func NewVectorWithValue(n, value int) Vector {
-    v := make([]int, n)
-    for i := range v {
-        v[i] = value
-    }
+	v := make([]int, n)
+	for i := range v {
+		v[i] = value
+	}
 	return Vector{v}
 }
 
@@ -41,8 +41,18 @@ func ParseVector(line string, separator string) (Vector, error) {
 		return VectorFromSlice(vector), nil
 	} else {
 		parts := strings.Split(line, separator)
-		vector := make([]int, len(parts))
-		for i, p := range parts {
+		filteredParts := []string{}
+		if separator == " " {
+			for _, p := range parts {
+				if p != "" {
+					filteredParts = append(filteredParts, p)
+				}
+			}
+		} else {
+			copy(filteredParts, parts)
+		}
+		vector := make([]int, len(filteredParts))
+		for i, p := range filteredParts {
 			n, err := strconv.Atoi(p)
 			if err != nil {
 				return NewEmptyVector(0), err
@@ -133,8 +143,8 @@ func (v *Vector) ToValuesString() string {
 }
 
 func (v *Vector) PrintValues() {
-    str := v.ToValuesString()
-    fmt.Println(str)
+	str := v.ToValuesString()
+	fmt.Println(str)
 }
 
 func (v *Vector) Equal(v2 Vector) bool {
