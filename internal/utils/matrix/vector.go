@@ -49,7 +49,7 @@ func ParseVector(line string, separator string) (Vector, error) {
 				}
 			}
 		} else {
-			copy(filteredParts, parts)
+			filteredParts = parts
 		}
 		vector := make([]int, len(filteredParts))
 		for i, p := range filteredParts {

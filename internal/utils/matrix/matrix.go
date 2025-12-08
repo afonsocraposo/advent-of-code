@@ -293,3 +293,26 @@ func (matrix *Matrix) PrintValues() {
 		fmt.Print("\n")
 	}
 }
+
+func (matrix *Matrix) MinGreaterThan(value int) (int, point.Point) {
+	m, n := matrix.Size()
+	result := value
+	p := point.NewPoint(-1, -1)
+	for i := range m {
+		for j := range n {
+			v, err := matrix.Get(i, j)
+			if err != nil {
+				log.Fatalln(err)
+			}
+			if v == value {
+				continue
+			}
+			if result == value || v < result {
+				result = v
+				p = point.NewPoint(i, j)
+				continue
+			}
+		}
+	}
+	return result, p
+}
