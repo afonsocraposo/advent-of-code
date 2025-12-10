@@ -2,6 +2,7 @@ package runner
 
 import (
 	"log"
+	"time"
 
 	"github.com/afonsocraposo/advent-of-code/internal/utils/filereader"
 )
@@ -19,7 +20,13 @@ func New(year int, day int, part1 partFunction, part2 partFunction) Runner {
 	return Runner{year, day, part1, part2}
 }
 
+func timeTrack(start time.Time, name string) {
+	elapsed := time.Since(start)
+	log.Printf("⏱️ %s took %s\n", name, elapsed)
+}
+
 func (r *Runner) TestPart1(example int, solution int) {
+	defer timeTrack(time.Now(), "TestPart1")
 	log.Printf("\n🧪 Running part 1 logic for example %d and solution %d\n", example, solution)
 	exampleLines, err := filereader.ReadDayExample(r.year, r.day, example)
 	if err != nil {
@@ -39,6 +46,7 @@ func (r *Runner) TestPart1(example int, solution int) {
 }
 
 func (r *Runner) TestPart2(example int, solution int) {
+	defer timeTrack(time.Now(), "TestPart2")
 	log.Printf("\n🧪 Running part 2 logic for example %d and solution %d\n", example, solution)
 	exampleLines, err := filereader.ReadDayExample(r.year, r.day, example)
 	if err != nil {
@@ -58,6 +66,7 @@ func (r *Runner) TestPart2(example int, solution int) {
 }
 
 func (r *Runner) RunPart1(input int) {
+	defer timeTrack(time.Now(), "RunPart1")
 	log.Printf("\nℹ️ Running part 1 logic for input %d", input)
 	inputLines, err := filereader.ReadDayInput(r.year, r.day, input)
 	if err != nil {
@@ -68,6 +77,7 @@ func (r *Runner) RunPart1(input int) {
 }
 
 func (r *Runner) RunPart2(input int) {
+	defer timeTrack(time.Now(), "RunPart2")
 	log.Printf("\nℹ️ Running part 2 logic for input %d", input)
 	inputLines, err := filereader.ReadDayInput(r.year, r.day, input)
 	if err != nil {
