@@ -287,6 +287,40 @@ func (matrix *Matrix) Dot(matrix2 Matrix) Matrix {
 	return result
 }
 
+func (matrix *Matrix) Multiply(matrix2 Matrix) (Matrix, error) {
+	m1, n1 := matrix.Size()
+	m2, n2 := matrix2.Size()
+	result := NewEmptyMatrix(m1, n2)
+	if n1 != m2 {
+		return result, errors.New(fmt.Sprintf("Matrix sizes are not compatible: %dx%d and %dx%d", m1, n1, m2, n2))
+	}
+
+	t, err := matrix2.Transpose()
+	if err != nil {
+		return result, err
+	}
+	for i, row := range matrix.Rows {
+		for j, col := range t.Rows {
+			sum := 0
+			for n := range n1 {
+				sum += row.Values[n] * col.Values[n]
+			}
+			result.Set(i, j, sum)
+		}
+	}
+
+	return result, nil
+}
+
+func (matrix *Matrix) MultiplyVector(v Vector) (Matrix, error) {
+	matrix2 := NewMatrix([]Vector{v})
+	t, err := matrix2.Transpose()
+	if err != nil {
+		return *t, err
+	}
+	return matrix.Multiply(*t)
+}
+
 func (matrix *Matrix) Reduce(fn func(a int, b int) int, initial int) int {
 	result := initial
 	for _, row := range matrix.Rows {
