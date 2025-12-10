@@ -9,6 +9,13 @@ import (
 	"github.com/afonsocraposo/advent-of-code/internal/utils/point"
 )
 
+type MatrixInterface interface {
+	Get(i, j int) (int, error)
+	Set(i, j, value int)
+	Size() (int, int)
+	PrintValues()
+}
+
 type Matrix struct {
 	Rows []Vector
 }
@@ -19,8 +26,9 @@ func NewMatrix(rows []Vector) Matrix {
 
 func NewMatrixWithValue(m, n, value int) Matrix {
 	rows := make([]Vector, m)
-	for i := range rows {
+	for i := range len(rows) {
 		rows[i] = NewVectorWithValue(n, value)
+		fmt.Println(i, len(rows))
 	}
 	return NewMatrix(rows)
 }
@@ -81,6 +89,13 @@ func (matrix *Matrix) Transpose() (*Matrix, error) {
 	}
 	transposed := NewMatrix(t)
 	return &transposed, nil
+}
+
+func (matrix *Matrix) WithPadding(length int, value int) Matrix {
+	m, n := matrix.Size()
+	newMatrix := NewMatrixWithValue(m+length*2, n+length*2, value)
+	newMatrix.SetSubMatrix(length, length, *matrix)
+	return newMatrix
 }
 
 func (matrix *Matrix) Mirror() (*Matrix, error) {
@@ -231,6 +246,21 @@ func (matrix *Matrix) SubMatrix(iStart int, jStart int, iEnd int, jEnd int) Matr
 		result[i] = row
 	}
 	return NewMatrix(result)
+}
+
+func (matrix *Matrix) SetSubMatrix(i, j int, subMatrix Matrix) {
+	m, n := matrix.Size()
+	sm, sn := subMatrix.Size()
+	if i+sm > m || j+sn > n {
+		log.Fatalln("Submatrix does not fit in matrix")
+	}
+	for ii := i; ii < i+sm; ii++ {
+		fmt.Println(ii, i+sm)
+		row := matrix.Rows[ii].Values
+		subRow := subMatrix.Rows[ii-i].Values
+		newRow := append(append(row[:j], subRow...), row[j+sn:]...)
+		matrix.Rows[ii].Values = newRow
+	}
 }
 
 func (matrix *Matrix) Equal(m Matrix) bool {
