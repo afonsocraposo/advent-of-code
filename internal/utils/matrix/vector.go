@@ -20,10 +20,7 @@ func NewEmptyVector(n int) Vector {
 }
 
 func NewVectorWithValue(n, value int) Vector {
-	v := make([]int, n)
-	for i := range v {
-		v[i] = value
-	}
+	v := slices.Repeat([]int{value}, n)
 	return Vector{v}
 }
 
