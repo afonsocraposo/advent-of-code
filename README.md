@@ -68,6 +68,12 @@ Here's how the magic is organized:
 
 ---
 
+## Dependencies 📦
+
+This project uses the following Go packages:
+
+- [`github.com/draffensperger/golp`](https://github.com/draffensperger/golp) - Linear programming solver
+
 ## Running a Solution 🏃
 
 To solve the puzzles for a specific day, run the following command:
